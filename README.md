@@ -2,6 +2,8 @@
 
 An interactive 3D particle universe built with Three.js and TypeScript. Explore five visually stunning particle scenes — from spiral galaxies to black hole accretion disks — all rendered in real-time WebGL with smooth camera controls.
 
+**Live Demo:** https://walecjccc.github.io/quantum-particles/
+
 ## Features
 
 - **5 Animated Scenes**
