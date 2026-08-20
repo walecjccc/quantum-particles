@@ -35,7 +35,7 @@ export class DNAScene extends BaseScene {
       colors[i3] = strandA.r;
       colors[i3 + 1] = strandA.g;
       colors[i3 + 2] = strandA.b;
-      sizes[idx] = 2.5;
+      sizes[idx] = 1.5 + Math.random() * 0.8;
       idx++;
 
       const j3 = idx * 3;
@@ -45,7 +45,7 @@ export class DNAScene extends BaseScene {
       colors[j3] = strandB.r;
       colors[j3 + 1] = strandB.g;
       colors[j3 + 2] = strandB.b;
-      sizes[idx] = 2.5;
+      sizes[idx] = 1.5 + Math.random() * 0.8;
       idx++;
 
       if (s % rungInterval === 0) {
@@ -63,7 +63,7 @@ export class DNAScene extends BaseScene {
           colors[k3] = rungCol.r;
           colors[k3 + 1] = rungCol.g;
           colors[k3 + 2] = rungCol.b;
-          sizes[idx] = 1.5;
+          sizes[idx] = 0.8 + Math.random() * 0.5;
           idx++;
         }
       }

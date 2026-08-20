@@ -42,12 +42,14 @@ export class BlackholeScene extends BaseScene {
       if (t < 0.3) col = hot.clone().lerp(warm, t / 0.3);
       else col = warm.clone().lerp(cool, (t - 0.3) / 0.7);
 
-      const brightness = 0.6 + Math.random() * 0.4;
+      const brightness = 0.3 + Math.random() * 0.6;
       colors[i3] = col.r * brightness;
       colors[i3 + 1] = col.g * brightness;
       colors[i3 + 2] = col.b * brightness;
 
-      sizes[i] = Math.random() * 3 + 0.5;
+      sizes[i] = t < 0.2
+        ? 0.3 + Math.random() * 0.8
+        : 0.15 + Math.random() * 0.5;
     }
 
     this.angles = angles;

@@ -57,7 +57,7 @@ export class FireworksScene extends BaseScene {
       vy: 7 + Math.random() * 5,
       vz: (Math.random() - 0.5) * 0.8,
       r: 1, g: 0.85, b: 0.6,
-      size: 3.5,
+      size: 2.0,
       life: 3.0,
       type: 0,
       targetY: 1 + Math.random() * 6,
@@ -96,14 +96,14 @@ export class FireworksScene extends BaseScene {
       this.spawn({
         x, y, z, vx, vy, vz,
         r: pal[0], g: pal[1], b: pal[2],
-        size: 1.5 + Math.random() * 2.5,
+        size: 0.5 + Math.random() * 1.2,
         life, type: 1,
       });
     }
     // Flash
     this.spawn({
       x, y, z, vx: 0, vy: 0, vz: 0,
-      r: 1, g: 1, b: 1, size: 10, life: 0.15, type: 2,
+      r: 1, g: 1, b: 1, size: 5, life: 0.15, type: 2,
     });
   }
 
@@ -178,7 +178,7 @@ export class FireworksScene extends BaseScene {
         vy: -0.8 + Math.random() * 0.3,
         vz: (Math.random() - 0.5) * 0.4,
         r: 1, g: 0.7, b: 0.4,
-        size: 1 + Math.random(), life: 0.3, type: 2,
+        size: 0.3 + Math.random() * 0.5, life: 0.3, type: 2,
       });
     }
 

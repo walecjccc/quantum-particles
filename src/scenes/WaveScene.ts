@@ -35,7 +35,7 @@ export class WaveScene extends BaseScene {
       colors[i3] = midColor.r;
       colors[i3 + 1] = midColor.g;
       colors[i3 + 2] = midColor.b;
-      sizes[i] = 2.0;
+      sizes[i] = 0.4 + Math.random() * 1.0;
     }
 
     this.gridX = gridX;

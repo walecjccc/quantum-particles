@@ -67,7 +67,7 @@ export abstract class BaseScene {
 
     const material = new THREE.ShaderMaterial({
       uniforms: {
-        uSize: { value: 2.5 },
+        uSize: { value: 1.0 },
         uTime: { value: 0 },
       },
       vertexShader: /* glsl */ `
@@ -78,19 +78,21 @@ export abstract class BaseScene {
         void main() {
           vColor = aColor;
           vec4 mv = modelViewMatrix * vec4(position, 1.0);
-          gl_PointSize = aSize * uSize * (320.0 / -mv.z);
+          gl_PointSize = aSize * uSize * (160.0 / -mv.z);
           gl_Position = projectionMatrix * mv;
         }
       `,
       fragmentShader: /* glsl */ `
         varying vec3 vColor;
         void main() {
-          float d = length(gl_PointCoord - vec2(0.5));
+          vec2 uv = gl_PointCoord - vec2(0.5);
+          float d = length(uv);
           if (d > 0.5) discard;
-          float alpha = smoothstep(0.5, 0.0, d);
-          float core = smoothstep(0.3, 0.0, d);
-          vec3 col = vColor + core * 0.5;
-          gl_FragColor = vec4(col, alpha);
+          float core = 1.0 - smoothstep(0.0, 0.05, d);
+          float glow = pow(1.0 - smoothstep(0.0, 0.5, d), 3.0) * 0.08;
+          float intensity = core + glow;
+          vec3 col = mix(vColor, vec3(1.0), core * 0.4);
+          gl_FragColor = vec4(col, intensity);
         }
       `,
       transparent: true,
