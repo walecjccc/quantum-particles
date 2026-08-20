@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Interactive 3D particle universe — an immersive Three.js visualization" />
+    <title>Quantum Particles — Interactive 3D Universe</title>
+    <script type="module" crossorigin src="./assets/index-CsqHauHr.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CBKMar-p.css">
+  </head>
+  <body>
+    <canvas id="scene"></canvas>
+
+    <div id="ui">
+      <div id="title-bar">
+        <h1>QUANTUM<span>PARTICLES</span></h1>
+        <p>Interactive 3D Particle Universe</p>
+      </div>
+
+      <div id="mode-selector">
+        <button class="mode-btn active" data-mode="galaxy">
+          <span class="mode-icon">&#5091;</span>
+          <span class="mode-label">Galaxy</span>
+        </button>
+        <button class="mode-btn" data-mode="nebula">
+          <span class="mode-icon">&#9728;</span>
+          <span class="mode-label">Nebula</span>
+        </button>
+        <button class="mode-btn" data-mode="dna">
+          <span class="mode-icon">&#8801;</span>
+          <span class="mode-label">DNA Helix</span>
+        </button>
+        <button class="mode-btn" data-mode="blackhole">
+          <span class="mode-icon">&#9678;</span>
+          <span class="mode-label">Black Hole</span>
+        </button>
+        <button class="mode-btn" data-mode="wave">
+          <span class="mode-icon">&#8643;</span>
+          <span class="mode-label">Wave</span>
+        </button>
+        <button class="mode-btn" data-mode="fireworks">
+          <span class="mode-icon">&#10022;</span>
+          <span class="mode-label">Fireworks</span>
+        </button>
+      </div>
+
+      <div id="info-panel">
+        <div id="stats">
+          <span id="particle-count">0</span> particles
+          <span id="fps">0</span> fps
+        </div>
+        <div id="controls-hint">
+          <span>Drag to rotate</span>
+          <span>Click to interact</span>
+          <span>Keys 1-6 to switch</span>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>
