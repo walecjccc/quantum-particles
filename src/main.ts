@@ -7,6 +7,7 @@ import { NebulaScene } from "./scenes/NebulaScene";
 import { DNAScene } from "./scenes/DNAScene";
 import { BlackholeScene } from "./scenes/BlackholeScene";
 import { WaveScene } from "./scenes/WaveScene";
+import { FireworksScene } from "./scenes/FireworksScene";
 
 type SceneConstructor = new () => BaseScene;
 
@@ -16,6 +17,7 @@ const SCENES: Record<string, SceneConstructor> = {
   dna: DNAScene,
   blackhole: BlackholeScene,
   wave: WaveScene,
+  fireworks: FireworksScene,
 };
 
 const canvas = document.getElementById("scene") as HTMLCanvasElement;
@@ -63,6 +65,61 @@ function updateParticleCount(n: number): void {
 
 loadScene("galaxy");
 
+// --- Mouse interaction ---
+const mouseNDC = new THREE.Vector2();
+const raycaster = new THREE.Raycaster();
+const mousePlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+const mouseWorld = new THREE.Vector3();
+let mouseActive = false;
+let mouseDownPos: { x: number; y: number } | null = null;
+let mouseDownTime = 0;
+
+canvas.addEventListener("mousemove", (e) => {
+  mouseNDC.x = (e.clientX / window.innerWidth) * 2 - 1;
+  mouseNDC.y = -(e.clientY / window.innerHeight) * 2 + 1;
+  mouseActive = true;
+});
+
+canvas.addEventListener("mouseleave", () => {
+  mouseActive = false;
+  current?.setMouseWorld(null);
+});
+
+canvas.addEventListener("mousedown", (e) => {
+  mouseDownPos = { x: e.clientX, y: e.clientY };
+  mouseDownTime = performance.now();
+});
+
+canvas.addEventListener("mouseup", (e) => {
+  if (!mouseDownPos) return;
+  const dist = Math.hypot(e.clientX - mouseDownPos.x, e.clientY - mouseDownPos.y);
+  const time = performance.now() - mouseDownTime;
+  if (dist < 6 && time < 350) {
+    mouseNDC.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseNDC.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouseNDC, camera);
+    const hit = new THREE.Vector3();
+    if (raycaster.ray.intersectPlane(mousePlane, hit)) {
+      current?.setMouseClick(hit);
+    }
+  }
+  mouseDownPos = null;
+});
+
+// Touch support
+canvas.addEventListener("touchstart", (e) => {
+  if (e.touches.length === 1) {
+    const t = e.touches[0];
+    mouseNDC.x = (t.clientX / window.innerWidth) * 2 - 1;
+    mouseNDC.y = -(t.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouseNDC, camera);
+    const hit = new THREE.Vector3();
+    if (raycaster.ray.intersectPlane(mousePlane, hit)) {
+      current?.setMouseClick(hit);
+    }
+  }
+});
+
 const buttons = document.querySelectorAll<HTMLButtonElement>(".mode-btn");
 buttons.forEach((btn) => {
   btn.addEventListener("click", () => {
@@ -98,7 +155,18 @@ function animate(): void {
   const delta = clock.getDelta();
   const elapsed = clock.getElapsedTime();
 
+  if (mouseActive) {
+    raycaster.setFromCamera(mouseNDC, camera);
+    raycaster.ray.intersectPlane(mousePlane, mouseWorld);
+    current?.setMouseWorld(mouseWorld);
+  }
+
   current?.update(elapsed, delta);
+
+  if (current && mouseActive && currentKey !== "galaxy" && currentKey !== "dna") {
+    current.applyMouseForce(mouseWorld);
+  }
+
   controls.update();
   renderer.render(scene, camera);
 
