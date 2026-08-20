@@ -1,0 +1,22 @@
+{
+  "name": "quantum-particles",
+  "version": "1.0.0",
+  "description": "Interactive 3D particle universe — an immersive Three.js visualization with multiple animated scenes",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "vite build && gh-pages -d dist"
+  },
+  "keywords": ["three.js", "particles", "3d", "visualization", "webgl", "interactive"],
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.169.0",
+    "typescript": "^5.6.0",
+    "vite": "^5.4.0"
+  }
+}
